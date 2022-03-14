@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  redis:
+    container_name: redis
+    image: redis:6.2.6
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"

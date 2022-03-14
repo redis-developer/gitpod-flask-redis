@@ -8,10 +8,9 @@ tasks:
     command: gp sync-done finished
     openMode: split-left
   - name: Start Flask Application
-      export FLASK_APP=flaskr
       export FLASK_ENV=development
     init: |
-      pip install -e .
+      pip install -r requirements.txt
     command: flask run
     openMode: split-right
 
