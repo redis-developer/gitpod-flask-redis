@@ -11,7 +11,7 @@ tasks:
       export FLASK_ENV=development
     init: |
       pip install -r requirements.txt
-    command: flask run
+    command: gp sync-await finished && flask run
     openMode: split-right
 
 vscode:
