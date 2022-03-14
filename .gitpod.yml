@@ -4,7 +4,7 @@ ports:
 
 tasks:
   - name: Start Redis
-    init: docker-compose up -d
+    init: docker-compose up -d && docker exec -it redis redis-cli
     command: gp sync-done finished
     openMode: split-left
   - name: Start Flask Application
