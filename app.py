@@ -1,27 +1,39 @@
-from flask import Flask, redirect
+from flask import Flask, render_template
 import redis
 
 app = Flask(__name__)
 
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+# Connect to Redis
+r = redis.Redis(
+    host='localhost', 
+    port=6379, 
+    db=0, 
+    decode_responses=True
+)
 
-def render_page():
-    count = r.get("mycounter")
-    if count is None:
-        count = 0
-
-    return f'<h1>Flask Redis Starter Application</h1><p>Count:{count}</p><ul><li><a href="/incr">Increment counter</a></li><li><a href="/reset">Reset counter</a></li></ul>'
+# Redis key name that we will store our counter in.
+COUNTER_KEY_NAME = "mycounter"
 
 @app.route("/incr")
 def incr():
-    count = r.incr("mycounter", 1)
-    return render_page()
+    # Atomically add one to the counter in Redis.
+    # If the key doesn't exist, Redis will create it with
+    # an initial value of 1.
+    count = r.incr(COUNTER_KEY_NAME, 1)
+    return { "count": count }
 
 @app.route("/reset")
 def reset():
-    r.delete("mycounter")
-    return render_page()
+    # Reset by just deleting the key from Redis.
+    r.delete(COUNTER_KEY_NAME)
+    return { "count": 0 }
 
 @app.route("/")
 def home():
-    return render_page()
+    # Get the current counter value.
+    count = r.get(COUNTER_KEY_NAME)
+    if count is None:
+        count = 0
+
+    # Render the home page with the current counter value.
+    return render_template('homepage.html', count = count)
