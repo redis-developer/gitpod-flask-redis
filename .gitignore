@@ -12,3 +12,6 @@ build/
 .idea/
 *.swp
 *~
+*.tmp
+*.bak
+.DS_Store
