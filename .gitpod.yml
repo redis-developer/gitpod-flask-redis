@@ -4,14 +4,21 @@ ports:
 
 tasks:
   - name: Start Redis
-    init: docker-compose up -d && alias redis-cli="docker exec -it redis redis-cli" && echo "Use redis-cli to interact with Redis here."
-    command: gp sync-done finished
+    init: |
+     docker-compose pull
+    command: |
+     alias redis-cli="docker exec -it redis redis-cli" 
+     echo "Use redis-cli to interact with Redis here."
+     docker-compose up -d
+     gp sync-done finished
     openMode: split-left
   - name: Start Flask Application
-      export FLASK_ENV=development
     init: |
+      export FLASK_ENV=development
       pip install -r requirements.txt
-    command: gp sync-await finished && flask run
+    command: |
+      gp sync-await finished && \
+      flask run
     openMode: split-right
 
 vscode:
