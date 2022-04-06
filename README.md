@@ -131,6 +131,22 @@ Now let's look at the code in `app.py` to see how to use Node Redis to connect t
 
 TODO
 
+#### Home Page
+
+TODO
+
+#### Pressing the Increment Button
+
+TODO
+
+#### Pressing the Reset Button
+
+TODO
+
+## Making Changes to the Application
+
+TODO
+
 ## What Capabilities does Redis Stack have?
 
 [Redis Stack](https://redis.io/docs/stack/) includes the following:
