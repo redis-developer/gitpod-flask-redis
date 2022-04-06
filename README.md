@@ -99,7 +99,7 @@ Now, open tabs in your browser for each of the following URLs:
 
 The application should show that the current value of the counter is 0, and RedisInsight should show you an empty database with no keys yet.
 
-Don't stop the application now, but when you're ready to, press Ctrl-C in the terminal window that npm is running in.
+Don't stop the application now, but when you're ready to, press Ctrl-C in the terminal window that Flask is running in.
 
 If you're using Docker, you can stop the Redis Stack container like this when you're finished with it:
 
