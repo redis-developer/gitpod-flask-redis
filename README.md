@@ -84,7 +84,7 @@ $ docker-compose up -d
 
 This starts a Redis Stack container with Redis listening on port 6379 and RedisInsight listening on port 8001.
 
-If you're not using Docker, install a copy of Redis Stack using your platform's package manager (see options here).  Make sure it's up and running with Redis on port 6379 and RedisInsighg on port 8001 (these are the default port values).
+If you're not using Docker, install a copy of Redis Stack using your platform's package manager ([see options here](https://redis.io/docs/stack/get-started/install/)).  Make sure it's up and running with Redis on port 6379 and RedisInsight on port 8001 (these are the default port values).
 
 Once Redis Stack is up and running, you can go ahead and start the application like this:
 
