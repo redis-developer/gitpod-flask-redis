@@ -127,7 +127,22 @@ Now let's look at the code in `app.py` to see how to use Node Redis to connect t
 
 #### Initializing Flask and Redis
 
-TODO
+This is a regular Flask application - so we initialize Flask and annotate the Python functions for each route using `@app.route`.  We also create a Redis client using redis-py and connect it to Redis Stack running on port 6379 of our local machine:
+
+```python
+from flask import Flask, render_template
+import redis
+
+app = Flask(__name__)
+
+# Connect to Redis
+r = redis.Redis(
+    host='localhost', 
+    port=6379, 
+    db=0, 
+    decode_responses=True
+)
+```
 
 #### Home Page
 
