@@ -183,7 +183,26 @@ To reset the counter, we delete its key from Redis, then return 0 to the front e
 
 ## Making Changes to the Application
 
-TODO
+If you change the application code, Flask will restart the server and pick up your changes immediately.  For example, let's make the Increment button add 10 to the value of the counter rather than 1...
+
+The redis-py `incrby` function takes two parameters:
+
+* The key name holding the value to increment.
+* A number to increment the current value by.
+
+In `app.py`, find the line:
+
+```python
+count = r.incrby(COUNTER_KEY_NAME, 1)
+```
+
+and change it to read:
+
+```python
+count = r.incrby(COUNTER_KEY_NAME, 10)
+```
+
+Save your changes and try hitting the Increment button again... what happens to the value of the counter now?
 
 ## What Capabilities does Redis Stack have?
 
