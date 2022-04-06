@@ -133,15 +133,53 @@ TODO
 
 #### Home Page
 
-TODO
+The home page is also the application's only page, and it's rendered like this:
+
+```python
+@app.route("/")
+def home():
+    # Get the current counter value.
+    count = r.get(COUNTER_KEY_NAME)
+    if count is None:
+        count = 0
+
+    # Render the home page with the current counter value.
+    return render_template('homepage.html', count = count)
+```
+
+Here, we use the Redis `GET` command to get the value stored at our counter's key, if any.  If the key doesn't exist yet (Redis returns `None`), we set `count` to an initial value of `0`.  Note that we don't write this to Redis as there's no need (our increment button code will deal with that).
+
+Finally, we render out the `homepage.html` template (in `templates/homepage.ejs`), passing it the value of `count` - this makes sure that when the homepage is rendered, the current value of the counter is there.
 
 #### Pressing the Increment Button
 
-TODO
+When the Increment button is pressed in the front end, a request is sent to `/incr`, which is handled by the following code:
+
+```python
+@app.route("/incr")
+def incr():
+    # Atomically add one to the counter in Redis.
+    # If the key doesn't exist, Redis will create it with
+    # an initial value of 1.
+    count = r.incrby(COUNTER_KEY_NAME, 1)
+    return { "count": count }
+```
+
+The [Redis `INCRBY`](https://redis.io/commands/incrby/) command atomically increments the numeric value stored at a given key by a specified amount.  If the key doesn't exist, Redis creates it for us (this is why we don't need to store an initial value of 0 in Redis in the home page route).  `INCRBY` returns the new value stored at the key, and that's what we send back to the front end.
 
 #### Pressing the Reset Button
 
-TODO
+When the Reset button is pressed in the front end, a request is sent to `/reset`, which is handled by the following code:
+
+```python
+@app.route("/reset")
+def reset():
+    # Reset by just deleting the key from Redis.
+    r.delete(COUNTER_KEY_NAME)
+    return { "count": 0 }
+```
+
+To reset the counter, we delete its key from Redis, then return 0 to the front end.  The front end JavaScript then updates the displayed value for the counter.
 
 ## Making Changes to the Application
 
