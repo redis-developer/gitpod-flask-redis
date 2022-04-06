@@ -19,7 +19,7 @@ When using Gitpod, the only things you need are:
 
 Click the button below to start a new cloud development environment using Gitpod:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/simonprickett/gitpod-express-redis)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/redis-developer/gitpod-express-redis)
 
 If you're using Gitpod for the first time, you'll need to authorize it to work with your GitHub account.
 
@@ -63,7 +63,7 @@ To run the application locally you'll need to install the following:
 First, clone the repo, create a Python virtual environment and install dependencies:
 
 ```bash
-$ git clone https://github.com/simonprickett/gitpod-flask-redis.git
+$ git clone https://github.com/redis-developer/gitpod-flask-redis.git
 $ cd gitpod-flask-redis
 $ python3 -m venv venv
 $ . ./venv/bin/activate
