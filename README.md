@@ -19,7 +19,7 @@ When using Gitpod, the only things you need are:
 
 Click the button below to start a new cloud development environment using Gitpod:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/redis-developer/gitpod-express-redis)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/redis-developer/gitpod-flask-redis)
 
 If you're using Gitpod for the first time, you'll need to authorize it to work with your GitHub account.
 
