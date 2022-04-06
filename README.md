@@ -110,8 +110,6 @@ $ docker-compose down
 
 ## How the Application Works
 
-## How the Application Works
-
 Before diving into code, let's first try out the application and see what data is stored in Redis.
 
 * Initially, there's nothing in Redis and the application shows the counter's value to be 0.
