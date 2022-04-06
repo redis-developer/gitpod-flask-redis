@@ -19,7 +19,7 @@ def incr():
     # Atomically add one to the counter in Redis.
     # If the key doesn't exist, Redis will create it with
     # an initial value of 1.
-    count = r.incr(COUNTER_KEY_NAME, 1)
+    count = r.incrby(COUNTER_KEY_NAME, 1)
     return { "count": count }
 
 @app.route("/reset")
