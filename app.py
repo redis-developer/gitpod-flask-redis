@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-from redisbloom.client import Client
 import redis, time
 
 app = Flask(__name__)
@@ -12,15 +11,15 @@ r = redis.Redis(
     decode_responses=True
 )
 
-rb = Client()
-rb.bfCreate('bloom', 0.01, 1000)
+r.delete('bloom')
+r.bf().create('bloom', 0.01, 1000)
 
 itemSet = "things"
 
 @app.route("/addbloom/<thing>")
 def add_bloom(thing):
     start = time.perf_counter()
-    ans = rb.bfAdd('bloom', thing)
+    ans = r.bf().add('bloom', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Added', "time":  diff}
@@ -40,7 +39,7 @@ def add_set(thing):
 @app.route("/checkbloom/<thing>")
 def check_bloom(thing):
     start = time.perf_counter()
-    ans = rb.bfExists('bloom', thing)
+    ans = r.bf().exists('bloom', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Probably in filter', "time":  diff }
