@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-import redis
+from redisbloom.client import Client
+import redis, time
 
 app = Flask(__name__)
 
@@ -11,29 +12,59 @@ r = redis.Redis(
     decode_responses=True
 )
 
-# Redis key name that we will store our counter in.
-COUNTER_KEY_NAME = "mycounter"
+rb = Client()
+rb.bfCreate('bloom', 0.01, 1000)
 
-@app.route("/incr")
-def incr():
-    # Atomically add one to the counter in Redis.
-    # If the key doesn't exist, Redis will create it with
-    # an initial value of 1.
-    count = r.incrby(COUNTER_KEY_NAME, 1)
-    return { "count": count }
+itemSet = "things"
+
+@app.route("/addbloom/<thing>")
+def add_bloom(thing):
+    start = time.perf_counter()
+    ans = rb.bfAdd('bloom', thing)
+    diff = time.perf_counter() - start
+    if ans == 1:
+        return { "check": 'Added', "time":  diff}
+    else:
+        return { "check": 'Probably already in filter - cannot add', "time":  diff }
+
+@app.route("/addset/<thing>")
+def add_set(thing):
+    start = time.perf_counter()
+    ans = r.sadd(itemSet, thing)
+    diff = time.perf_counter() - start
+    if ans == 1:
+        return { "check": 'Added', "time":  diff }
+    else:
+        return { "check": 'Already in set - cannot add', "time":  diff }
+
+@app.route("/checkbloom/<thing>")
+def check_bloom(thing):
+    start = time.perf_counter()
+    ans = rb.bfExists('bloom', thing)
+    diff = time.perf_counter() - start
+    if ans == 1:
+        return { "check": 'Probably in filter', "time":  diff }
+    else:
+        return { "check": 'Definitely not in filter', "time":  diff }
+
+@app.route("/checkset/<thing>")
+def check_set(thing):
+    start = time.perf_counter()
+    ans = r.sismember(itemSet, thing)
+    diff = time.perf_counter() - start
+    if ans == 1:
+        return { "check": 'Definitely in set', "time":  diff }
+    else:
+        return { "check": 'Definitely not in set', "time":  diff }
 
 @app.route("/reset")
 def reset():
     # Reset by just deleting the key from Redis.
-    r.delete(COUNTER_KEY_NAME)
-    return { "count": 0 }
+    r.delete('bloom')
+    return { "check": 'Deleted bloom filter- now empty' }
 
 @app.route("/")
 def home():
-    # Get the current counter value.
-    count = r.get(COUNTER_KEY_NAME)
-    if count is None:
-        count = 0
-
+    # Get the current counter value
     # Render the home page with the current counter value.
-    return render_template('homepage.html', count = count)
+    return render_template('homepage.html')

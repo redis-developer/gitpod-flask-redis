@@ -1,20 +1,42 @@
 window.onload = function () {
-  const incrBtn = document.getElementById('incrBtn');
   const resetBtn = document.getElementById('resetBtn');
+  const checkBloom = document.getElementById('checkbloom');
+  const checkSet = document.getElementById('checkset');
+  const addBloom = document.getElementById('addbloom');
+  const addSet = document.getElementById('addset');
+  const addthing = document.getElementById('addthing');
+  const checkthing = document.getElementById('checkthing');
 
-  // Get the new value of the counter from the backend...
-  const updateCountValue = async function (relativePath) {
+  const updateData = async function (relativePath) {
     const response = await fetch(relativePath);
     const responseJSON = await response.json();
-    const counterElem = document.getElementById('counterValue');
-    counterElem.innerText = responseJSON.count;
-  };
+    const checkElem = document.getElementById('checkValue');
+    const timeElem = document.getElementById('timeValue')
+    checkElem.innerText = responseJSON.check;
+    timeElem.innerText = responseJSON.time;
+  }
 
-  incrBtn.onclick = async function () {
-    await updateCountValue('/incr');
-  };
+  addBloom.onclick = async function () {
+    addThing = addthing.value
+    await updateData(`/addbloom/${addThing}`)
+  }
+
+  addSet.onclick = async function () {
+    addThing = addthing.value
+    await updateData(`/addset/${addThing}`)
+  }
+
+  checkBloom.onclick = async function () {
+    checkThing = checkthing.value
+    await updateData(`/checkbloom/${checkThing}`)
+  }
+
+  checkSet.onclick = async function () {
+    checkThing = checkthing.value
+    await updateData(`/checkset/${checkThing}`)
+  }
 
   resetBtn.onclick = async function () {
-    await updateCountValue('/reset');
+    await updateData('/reset');
   }
 }

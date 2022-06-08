@@ -15,7 +15,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title has-text-white has-text-centered">
-            Redis Flask Counter Application
+            Redis Flask Bloom Filter Application
           </h1>
         </div>
       </div>
@@ -24,11 +24,19 @@
       <section class="section">
         <div class="card">
           <div class="card-content">
-            <p id="counterValue" class="title has-text-centered">{{count}}</p>
+            <p id="timeValue" class="title has-text-centered">{{time}}</p>
+            <p id="checkValue" class="title has-text-centered">{{check}}</p>
           </div>
           <footer class="card-footer">
             <p class="card-footer-item">
-              <button id="incrBtn" class="button is-large is-success">Increment</button>
+              <button id="checkbloom" class="button is-large is-success">Check Bloom Filter</button>
+              <button id="checkset" class="button is-large is-success">Check Set</button>
+              <input type="text" id="checkthing">
+            </p>
+            <p class="card-footer-item">
+              <button id="addbloom" class="button is-large is-success">Add to Bloom Filter</button>
+              <button id="addset" class="button is-large is-success">Add to Set</button>
+              <input type="text" id="addthing">
             </p>
             <p class="card-footer-item">
               <button id="resetBtn" class="button is-large is-danger">Reset</button>
@@ -40,10 +48,10 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Redis Flask Counter Application</strong> by <a href="https://developer.redis.com/">Redis Developer Relations</a>.  An example 
+          A fork of the Redis Flask Counter Application by <a href="https://developer.redis.com/">Redis Developer Relations</a>.  An example 
           application using <a href="https://redis.io/">Redis</a>, <a href="https://flask.palletsprojects.com/">Flask</a> and <a href="https://bulma.io/">Bulma</a>.
         </p>
-        <p><a href="https://github.com/redis-developer/gitpod-flask-redis">Source code is available on GitHub</a>.</p>
+        <p><a href="https://github.com/redis-developer/gitpod-flask-redis">Original source code is available on GitHub</a>.</p>
       </div>
     </footer>
   </div>
