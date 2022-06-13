@@ -1,3 +1,4 @@
+import pip
 from flask import Flask, render_template
 import redis, time
 
@@ -11,15 +12,13 @@ r = redis.Redis(
     decode_responses=True
 )
 
-r.delete('bloom')
-r.bf().create('bloom', 0.01, 1000)
-
-itemSet = "things"
+r.delete('words_bloom')
+r.bf().create('words_bloom', 0.01, 1000)
 
 @app.route("/addbloom/<thing>")
 def add_bloom(thing):
     start = time.perf_counter()
-    ans = r.bf().add('bloom', thing)
+    ans = r.bf().add('words_bloom', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Added', "time":  diff}
@@ -29,7 +28,7 @@ def add_bloom(thing):
 @app.route("/addset/<thing>")
 def add_set(thing):
     start = time.perf_counter()
-    ans = r.sadd(itemSet, thing)
+    ans = r.sadd('words_set', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Added', "time":  diff }
@@ -38,8 +37,9 @@ def add_set(thing):
 
 @app.route("/checkbloom/<thing>")
 def check_bloom(thing):
+    print(type(thing))
     start = time.perf_counter()
-    ans = r.bf().exists('bloom', thing)
+    ans = r.bf().exists('words_bloom', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Probably in filter', "time":  diff }
@@ -49,12 +49,25 @@ def check_bloom(thing):
 @app.route("/checkset/<thing>")
 def check_set(thing):
     start = time.perf_counter()
-    ans = r.sismember(itemSet, thing)
+    ans = r.sismember('words_set', thing)
     diff = time.perf_counter() - start
     if ans == 1:
         return { "check": 'Definitely in set', "time":  diff }
     else:
         return { "check": 'Definitely not in set', "time":  diff }
+
+@app.route("/pop")
+def populate():
+    # pipe = r.pipeline(transaction=False)
+    with open('words.txt', 'r') as f:
+        for line in f:
+            print(line)
+            ans1 = r.bf().add('words_bloom', str(line))
+            print(ans1)
+            ans2 = r.sadd('words_set', str(line))
+            print(ans2)
+    # pipe.execute()
+    return { "check": 'Populated' }
 
 @app.route("/reset")
 def reset():
