@@ -61,10 +61,10 @@ def populate():
     # pipe = r.pipeline(transaction=False)
     with open('words.txt', 'r') as f:
         for line in f:
-            print(line)
-            ans1 = r.bf().add('words_bloom', str(line))
+            word = line.strip()
+            ans1 = r.bf().add('words_bloom', word)
             print(ans1)
-            ans2 = r.sadd('words_set', str(line))
+            ans2 = r.sadd('words_set', word)
             print(ans2)
     # pipe.execute()
     return { "check": 'Populated' }
