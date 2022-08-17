@@ -17,7 +17,10 @@
           <h1 class="title has-text-white has-text-centered">
             Redis Flask Bloom Filter Application
           </h1>
-          <button id="populate" class="button is-large is-success">Populate BF and Set with common English words</button>
+          <button id="populate1000" class="button is-large is-success">Populate 1,000</button>
+          <button id="populate10000" class="button is-large is-success">Populate 10,000</button>
+          <button id="populatelots" class="button is-large is-success">Populate A Lot</button>
+          <button id="populateusers" class="button is-large is-success">Populate User IDs</button>
         </div>
       </div>
     </section>
@@ -25,32 +28,79 @@
       <section class="section">
         <div class="card">
           <div class="card-content">
-            <p id="timeValue" class="title has-text-centered">{{time}}</p>
             <p id="checkValue" class="title has-text-centered">{{check}}</p>
           </div>
-          <footer class="card-footer">
-            <p class="card-footer-item">
-              <button id="checkbloom" class="button is-large is-success">Check Bloom Filter</button>
-              <button id="checkset" class="button is-large is-success">Check Set</button>
-              <input type="text" id="checkthing">
-            </p>
-            <p class="card-footer-item">
-              <button id="addbloom" class="button is-large is-success">Add to Bloom Filter</button>
-              <button id="addset" class="button is-large is-success">Add to Set</button>
-              <input type="text" id="addthing">
-            </p>
-            <p class="card-footer-item">
-              <button id="resetBtn" class="button is-large is-danger">Reset</button>
-            </p>
-          </footer>
+          <label for="filter">Choose a filter:</label>
+          <select id="filter_type" name="filter">
+            <option value="Bloom">Bloom</option>
+            <option value="Cuckoo">Cuckoo</option>
+            <option value="Set">Set</option>
+            <input type="text" id="itemF">
+            <button id="addFilter" class="button is-large is-success">Add to Selected Data Structure</button>
+            <button id="checkFilter" class="button is-large is-success">Check Selected Data Structure</button>
+          </select>
+          <br />
+          <label for="sketch">Choose a sketch:</label>
+          <select id="sketch_type" name="sketch">
+            <option value="TopK">TopK</option>
+            <option value="CMS">CMS</option>
+            <option value="SortedSet">SortedSet</option>
+            <input type="text" id="itemS">
+            <button id="addSketch" class="button is-large is-success">Add to Selected Data Structure</button>
+            <button id="checkSketch" class="button is-large is-success">Check Selected Data Structure</button>
+          </select>
         </div>
+        <table border="1" style="width: 70%">
+          <tr>
+            <th>Bloom</th>
+            <th>Cuckoo</th>
+            <th>Set</th>
+            <th>TopK</th>
+            <th>CMS</th>
+            <th>SortedSet</th>
+          </tr>
+          <tr>
+            <td id="BloomSize"> {{bloomSize}} </td>
+            <td id="CuckooSize"> {{cuckooSize}} </td>
+            <td id="SetSize"> {{setSize}} </td>
+            <td id="TopKSize"> {{topkSize}} </td>
+            <td id="CMSSize"> {{cmsSize}} </td>
+            <td id="SortedSet"> {{sortedSize}} </td>
+          </tr>
+        </table>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <button id="resetBtn" class="button is-large is-danger">Reset</button>
+          </p>
+        </footer>
       </section>
     </div>
+    <table>
+      <tr>
+        <td> Operation </td>
+        <td> {{first_name}} </td>
+        <td> {{second_name}} </td>
+        <td> {{third_name}} </td>
+        <td> {{fourth_name}} </td>
+        <td> {{fifth_name}} </td>
+      </tr>
+      <tr>
+        <td> Time </td>
+        <td> {{first_time}} </td>
+        <td> {{second_time}} </td>
+        <td> {{third_time}} </td>
+        <td> {{fourth_time}} </td>
+        <td> {{fifth_time}} </td>
+      </tr>
+    </table>
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
           A fork of the Redis Flask Counter Application by <a href="https://developer.redis.com/">Redis Developer Relations</a>.  An example 
           application using <a href="https://redis.io/">Redis</a>, <a href="https://flask.palletsprojects.com/">Flask</a> and <a href="https://bulma.io/">Bulma</a>.
+        </p>
+        <p>
+          Thanks to <a href="https://github.com/insidetrust/statistically-likely-usernames">insidetrust</a> for the usernames!
         </p>
         <p><a href="https://github.com/redis-developer/gitpod-flask-redis">Original source code is available on GitHub</a>.</p>
       </div>
